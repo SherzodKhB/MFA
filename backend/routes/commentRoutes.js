@@ -1,5 +1,5 @@
 import express from 'express';
-import { addComment } from '../controllers/commentController.js';
+import { addComment } from '../controllers/commentsController.js';
 import { authenticate } from '../middlewares/authMiddleware.js';
 
 const router = express.Router();

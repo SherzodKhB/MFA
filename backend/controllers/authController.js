@@ -1,8 +1,10 @@
-// controllers/authController.js
-const User = require('../models/User');
-const crypto = require('crypto');
+import User from "../models/User.js"
+import crypto from "crypto"
+import nodemailer from "nodemailer"
+import jwt from "jsonwebtoken"
+import bcrypt from "bcryptjs"
 
-exports.registerUser = async (req, res) => {
+const registerUser = async (req, res) => {
   const { username, email, password } = req.body;
 
   try {
@@ -29,10 +31,8 @@ exports.registerUser = async (req, res) => {
 };
 
 
-// controllers/authController.js
-const nodemailer = require('nodemailer');
 
-exports.sendVerificationCode = async (req, res) => {
+const sendVerificationCode = async (req, res) => {
   const { email } = req.body;
 
   try {
@@ -66,7 +66,7 @@ exports.sendVerificationCode = async (req, res) => {
   }
 };
 
-exports.verifyUser = async (req, res) => {
+const verifyUser = async (req, res) => {
   const { email, code } = req.body;
 
   try {
@@ -91,11 +91,9 @@ exports.verifyUser = async (req, res) => {
 };
 
 
-// controllers/authController.js
-const jwt = require('jsonwebtoken');
-const bcrypt = require('bcrypt');
 
-exports.loginUser = async (req, res) => {
+
+const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   try {
@@ -122,3 +120,12 @@ exports.loginUser = async (req, res) => {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
+
+
+
+export default {
+  registerUser,
+  loginUser,
+  verifyUser,
+  sendVerificationCode,
+}
