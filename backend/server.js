@@ -4,9 +4,11 @@ import mongoose from 'mongoose';
 import authRoutes from './routes/authRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import connectDB from './config/db.js';
+import cors from "cors"
 
 dotenv.config();
 const app = express();
+app.use(cors())
 
 // Middleware
 app.use(express.json());

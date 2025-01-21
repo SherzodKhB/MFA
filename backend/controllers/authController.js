@@ -14,7 +14,7 @@ const registerUser = async (req, res) => {
     }
 
     const verificationCode = crypto.randomBytes(20).toString('hex');
-    const verificationExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+    // const verificationExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
 
     const newUser = await User.create({
       username,

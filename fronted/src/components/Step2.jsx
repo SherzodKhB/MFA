@@ -8,7 +8,7 @@ function Step2() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/verify-email', { code });
+      const response = await axios.post('/api/auth/verify-email', { code });
       alert(response.data.message);
     } catch (error) {
       alert(error.response.data.message);
@@ -17,7 +17,7 @@ function Step2() {
 
   const handleResend = async () => {
     try {
-      const response = await axios.post('/api/resend-code');
+      const response = await axios.post('/api/auth/resend-code');
       setIsResent(true);
       alert(response.data.message);
     } catch (error) {

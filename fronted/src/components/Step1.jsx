@@ -11,7 +11,7 @@ function Step1() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/register', formData);
+      const response = await axios.post('/api/auth/register', formData);
       alert(response.data.message);
     } catch (error) {
       alert(error.response.data.message);
