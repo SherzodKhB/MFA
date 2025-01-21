@@ -9,7 +9,7 @@ function Step2() {
     e.preventDefault();
     try {
       const email = localStorage.getItem("email")
-      const response = await axios.post('/api/auth/verify-email', { code,email });
+      const response = await axios.post('/api/auth/verify-email', { code, email });
       alert(response.data.message);
     } catch (error) {
       alert(error.response.data.message);
@@ -18,7 +18,8 @@ function Step2() {
 
   const handleResend = async () => {
     try {
-      const response = await axios.post('/api/auth/resend-code');
+      const email = localStorage.getItem("email")
+      const response = await axios.post('/api/auth/resend-code', { email });
       setIsResent(true);
       alert(response.data.message);
     } catch (error) {
@@ -38,7 +39,7 @@ function Step2() {
         />
         <button type="submit">Verify</button>
       </form>
-      <button onClick={handleResend}>Resend Code</button>
+      <button onClick={handleResend}> {!isResent ? 'Send Code' : 'Resend Code'} </button>
       {isResent && <p>Verification code resent!</p>}
     </div>
   );
