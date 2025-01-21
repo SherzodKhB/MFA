@@ -1,0 +1,45 @@
+.step-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f7f7f7;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #ddd;
+  }
+  
+  .step-item {
+    padding: 10px 15px;
+    margin: 0 5px;
+    border-radius: 5px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    background-color: #eaeaea;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .step-item.active {
+    background-color: #4caf50;
+    color: white;
+  }
+  
+  .step-item.completed {
+    background-color: #8bc34a;
+    color: white;
+  }
+  
+  .step-item:hover {
+    background-color: #d4d4d4;
+  }
+  
+
+
+  /* Menyudagi faol (active) element uchun maxsus uslub */
+.nav-link.active {
+  font-weight: bold;
+  color: #007bff; /* Faol rang */
+  border-bottom: 2px solid #007bff; /* Faol element pastki chizig'i */
+  text-decoration: none; /* Chizilgan bo'lmasin */
+}

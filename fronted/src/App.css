@@ -1,0 +1,20 @@
+.app-container {
+  font-family: Arial, sans-serif;
+}
+
+.step-menu {
+  display: flex;
+  gap: 1rem;
+  background: #f0f0f0;
+  padding: 1rem;
+}
+
+.step-menu a {
+  text-decoration: none;
+  color: #333;
+}
+
+.step-menu a.active {
+  font-weight: bold;
+  color: #007bff;
+}
