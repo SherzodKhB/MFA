@@ -23,6 +23,8 @@ const StepFour = () => {
           Authorization: `Bearer ${token}`,
         },
       });
+
+      alert("Rasm yuklandi")
     } catch (err) {
       setError(err.response?.data?.message || 'Image upload failed');
     }

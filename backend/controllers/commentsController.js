@@ -1,53 +1,77 @@
-
+import User from '../models/User.js';
 import Comment  from '../models/Comment.js';
+import compareFaces from '../utils/faceRecognition.js'
 
- const postComment = async (req, res) => {
-  const { text } = req.body;
+import path from 'path';
+import { fileURLToPath } from 'url';
 
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const addComment = async (req, res) => {
+  const { comment } = req.body;
+  const tokenUserId = req.user; // Token orqali foydalanuvchini aniqlash
+
+
+  // Multer yordamida yuklangan fayl
+  const image = req.file;
+  
   try {
+    if (!image) {
+      return res.status(400).json({ message: 'No image uploaded' });
+    }
+
+    // Foydalanuvchi rasmiga mosligini tekshirish
+    const user = await User.findById(tokenUserId.userId);
+
+    
+    
+    
+    // Temp papkada saqlangan rasmni tekshirish
+    const uploadedImagePath = path.join(__dirname, '../temp', image.filename);
+    
+   
+    
+    
+    const isMatched = await compareFaces(user.image, uploadedImagePath);
+
+    console.log("Otdi");
+    
+    
+
+    if (!isMatched) {
+    fs.unlinkSync(uploadedImagePath);
+
+      return res.status(400).json({ message: 'Uploaded image does not match with the user' });
+    }
+
+    // Solishtirilgan rasmni o‘chirish
+    fs.unlinkSync(uploadedImagePath);
+
+    // Yangi koment qo‘shish
     const newComment = await Comment.create({
-      userId: req.userId,
-      text,
-      isApproved: false,
+      comment,
+      userId: tokenUserId,
     });
 
-    res.status(201).json({ message: 'Comment submitted for approval' });
-  } catch (error) {
-    res.status(500).json({ message: 'Internal server error', error: error.message });
-  }
-};
-const getComments = async (req, res) => {
-  try {
-    const comments = await Comment.find({ isApproved: true }).populate('userId', 'username');
-    res.status(200).json(comments);
+    res.status(201).json({ message: 'Comment added successfully', comment: newComment });
+
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 };
 
 
- const addComment = async (req, res) => {
+ const getComments = async (req, res) => {
   try {
-    // Foydalanuvchidan kelgan malumotlarni olish
-    const { postId, text, userId } = req.body; 
-
-    // Yangi kommentni yaratish
-    const newComment = new Comment({
-      postId,    // Postga tegishli ID (qaysi postga komment yozilgan)
-      text,      // Komment matni
-      userId,    // Kommentni yozgan foydalanuvchi ID
-      createdAt: new Date(),  // Kommentning yaratilgan vaqti
-    });
-
-    // Kommentni saqlash
-    await newComment.save();
-
-    // Yangi kommentni clientga yuborish
-    res.status(201).json(newComment); 
+    // Kommentlarni olish
+    const comments = await Comment.find().sort({ createdAt: -1 }); // Yangi kommentlarni yuqorida ko'rsatadi
+    res.status(200).json({ success: true, comments });
   } catch (error) {
-    // Agar xatolik yuzaga kelsa, serverga xato haqida xabar yuborish
-    res.status(500).json({ message: error.message });
+    res.status(500).json({ success: false, message: 'Failed to fetch comments', error: error.message });
   }
 };
 
-export  {postComment, getComments, addComment}
+ 
+
+export  {getComments, addComment}

@@ -1,10 +1,12 @@
-// routes/profile.js
-const express = require('express');
-const multer = require('multer');
-const { uploadImage } = require('../controllers/profileController');
-const { authenticateUser } = require('../middleware/authMiddleware');
+import {Router} from 'express'
+import multer  from 'multer';
+import uploadImage   from '../controllers/profileController.js';
+import  authenticate  from '../middlewares/authMiddleware.js';
+import checkPhoto from '../middlewares/checkPhoto.js';
 
-const router = express.Router();
+
+
+const router = Router();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => cb(null, 'uploads/'),
@@ -13,6 +15,6 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-router.post('/upload-image', authenticateUser, upload.single('image'), uploadImage);
+router.post('/upload-image', authenticate, checkPhoto, upload.single('image'), uploadImage);
 
-module.exports = router;
+export default router;
