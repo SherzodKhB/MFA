@@ -20,8 +20,7 @@ const registerUser = async (req, res) => {
       username,
       email,
       password,
-      verificationCode,
-      verificationExpires,
+      verificationCode
     });
 
     res.status(201).json({ message: 'User registered', step: 2, userId: newUser._id });
@@ -41,7 +40,7 @@ const sendVerificationCode = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (user.verified) {
+    if (user.isVerified) {
       return res.status(400).json({ message: 'User already verified' });
     }
 
@@ -79,9 +78,8 @@ const verifyUser = async (req, res) => {
       return res.status(400).json({ message: 'Invalid or expired verification code' });
     }
 
-    user.verified = true;
+    user.isVerified = true;
     user.verificationCode = undefined;
-    user.verificationExpires = undefined;
     await user.save();
 
     res.status(200).json({ message: 'User verified successfully' });
@@ -102,7 +100,7 @@ const loginUser = async (req, res) => {
       return res.status(404).json({ message: 'User not found' });
     }
 
-    if (!user.verified) {
+    if (!user.isVerified) {
       return res.status(400).json({ message: 'User is not verified' });
     }
 
@@ -123,7 +121,7 @@ const loginUser = async (req, res) => {
 
 
 
-export default {
+export  {
   registerUser,
   loginUser,
   verifyUser,

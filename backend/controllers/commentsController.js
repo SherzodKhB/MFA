@@ -50,4 +50,4 @@ const getComments = async (req, res) => {
   }
 };
 
-export default {postComment, getComments, addComment}
+export  {postComment, getComments, addComment}
