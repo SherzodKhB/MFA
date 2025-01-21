@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import axios from '../services/api';
 
-const StepThree = ({ onNext }) => {
+const StepThree = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -18,8 +18,8 @@ const StepThree = ({ onNext }) => {
     e.preventDefault();
     try {
       const response = await axios.post('/api/auth/login', formData);
-      localStorage.setItem('token', response.data.token); // Tokenni saqlash
-      onNext();
+      localStorage.setItem('token', response.data.token); 
+      alert("Sizga token berildi")
     } catch (err) {
       setError(err.response?.data?.message || 'Login failed');
     }

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
-const StepFour = ({ onNext }) => {
+import axios from '../services/api';
+
+const StepFour = () => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState('');
 
@@ -22,7 +23,6 @@ const StepFour = ({ onNext }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      onNext();
     } catch (err) {
       setError(err.response?.data?.message || 'Image upload failed');
     }
