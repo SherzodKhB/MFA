@@ -14,7 +14,7 @@ const registerUser = async (req, res) => {
     }
 
     const verificationCode = crypto.randomBytes(20).toString('hex');
-    const verificationExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+    const verificationExpires = Date.now() + 20 * 60 * 1000; // 10 minutes
 
     const newUser = await User.create({
       username,
@@ -72,6 +72,9 @@ const sendVerificationCode = async (req, res) => {
 const verifyUser = async (req, res) => {
   const { email, code } = req.body;
 
+ 
+  
+
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -97,6 +100,12 @@ const verifyUser = async (req, res) => {
 
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
+
+
+
+console.log("test");
+
+  
 
   try {
     const user = await User.findOne({ email });
