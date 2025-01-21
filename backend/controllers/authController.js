@@ -14,16 +14,17 @@ const registerUser = async (req, res) => {
     }
 
     const verificationCode = crypto.randomBytes(20).toString('hex');
-    // const verificationExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
+    const verificationExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
 
     const newUser = await User.create({
       username,
       email,
       password,
-      verificationCode
+      verificationCode,
+      verificationExpires
     });
 
-    res.status(201).json({ message: 'User registered', step: 2, userId: newUser._id });
+    res.status(201).json({ message: 'User registered', email});
   } catch (error) {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }

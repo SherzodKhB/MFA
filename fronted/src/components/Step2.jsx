@@ -8,7 +8,8 @@ function Step2() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('/api/auth/verify-email', { code });
+      const email = localStorage.getItem("email")
+      const response = await axios.post('/api/auth/verify-email', { code,email });
       alert(response.data.message);
     } catch (error) {
       alert(error.response.data.message);

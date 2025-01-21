@@ -13,6 +13,10 @@ function Step1() {
     try {
       const response = await axios.post('/api/auth/register', formData);
       alert(response.data.message);
+      localStorage.setItem("email", response.data.email)
+
+
+      
     } catch (error) {
       alert(error.response.data.message);
     }
