@@ -1,6 +1,6 @@
 import User from '../models/User.js';
 import Comment  from '../models/Comment.js';
-import compareFaces from '../utils/faceRecognition.js'
+import {compareFaces} from '../utils/faceRecognition.js'
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -28,17 +28,14 @@ const addComment = async (req, res) => {
     
     
     // Temp papkada saqlangan rasmni tekshirish
+    
+    const user_image_json_file =  path.join(__dirname, '../', user.savedDescriptorPath);
+    
     const uploadedImagePath = path.join(__dirname, '../temp', image.filename);
     
-   const user_image =  path.join(__dirname, '../', user.image);
-    
-    
-    const isMatched = await compareFaces(user_image, uploadedImagePath);
+    const isMatched = await compareFaces(user_image_json_file, uploadedImagePath);
 
-    console.log(isMatched);
-    
-
-    console.log("Otdi");
+   
     
     
 

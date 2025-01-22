@@ -9,6 +9,8 @@ const userSchema = new mongoose.Schema({
   verificationCode: { type: String },
   verificationExpires: { type: Date },
   image: { type: String },
+  savedDescriptorPath: {type: String}
+
 });
 
 userSchema.pre('save', async function (next) {

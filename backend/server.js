@@ -5,6 +5,7 @@ import authRoutes from './routes/authRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import profile from "./routes/profile.js"
 import connectDB from './config/db.js';
+import { loadModels } from './utils/faceRecognition.js';
 import cors from "cors"
 
 dotenv.config();
@@ -17,6 +18,10 @@ app.use(express.urlencoded({ extended: true }));
 
 // MongoDB ulanishi
 connectDB();
+
+(async () => {
+    await loadModels(); // Modellarni dastur ishga tushganda bir marta yuklash
+  })()
 
 // Routerlar
 app.use('/api/auth', authRoutes);
