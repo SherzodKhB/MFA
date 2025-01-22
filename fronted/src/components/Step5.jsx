@@ -29,7 +29,10 @@ const StepFive = () => {
     fetchComments();
   }, []);
 
-  const capturePhoto = () => {
+
+
+  const capturePhoto = async () => {
+    await navigator.mediaDevices.getUserMedia({ video: true });
     const imageSrc = webcamRef.current.getScreenshot();
     setCapturedImage(imageSrc);
   };
@@ -102,7 +105,6 @@ const StepFive = () => {
         {comments.map((c) => (
           <li key={c._id}>
             <p>{c.comment}</p>
-            <img src={c.imagePath} alt="User upload" width="100" />
           </li>
         ))}
       </ul>

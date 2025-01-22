@@ -30,28 +30,29 @@ const addComment = async (req, res) => {
     // Temp papkada saqlangan rasmni tekshirish
     const uploadedImagePath = path.join(__dirname, '../temp', image.filename);
     
-   
+   const user_image =  path.join(__dirname, '../', user.image);
     
     
-    const isMatched = await compareFaces(user.image, uploadedImagePath);
+    const isMatched = await compareFaces(user_image, uploadedImagePath);
+
+    console.log(isMatched);
+    
 
     console.log("Otdi");
     
     
 
     if (!isMatched) {
-    fs.unlinkSync(uploadedImagePath);
+    // fs.unlinkSync(uploadedImagePath);
 
       return res.status(400).json({ message: 'Uploaded image does not match with the user' });
     }
 
-    // Solishtirilgan rasmni o‘chirish
-    fs.unlinkSync(uploadedImagePath);
-
+  
     // Yangi koment qo‘shish
     const newComment = await Comment.create({
       comment,
-      userId: tokenUserId,
+      userId: tokenUserId.userId,
     });
 
     res.status(201).json({ message: 'Comment added successfully', comment: newComment });
